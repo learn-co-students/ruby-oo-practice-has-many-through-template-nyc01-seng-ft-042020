@@ -6,19 +6,35 @@ class Driver
     attr_accessor :rating, :reviews
 
     @@all = []
+    @@all_ratings = []
 
-    def initialize (name, rating = nil)
+    def initialize (name)
         @name = name
         @rating = rating
         @reviews = []
         Driver.all << self
+        Driver.all_ratings << @rating
     end
 
     def self.all
         @@all
     end
 
+    def self.all_ratings
+        @@all_ratings
+    end
+
     def self.average_ratings
+        #I need a way to remove nils from an array
+       @@all_ratings.sum / @@all_ratings.count
+
+
+        # if @@all_ratings.each {|element| element = nil}
+        #     "Cannot math with nil"
+        # else
+        #     @@all_ratings.sum / @@all_ratings.count
+        # end
+
     end
 
     def rides
