@@ -15,9 +15,9 @@ class Brewery
     end
 
     # # get list of all beers in a brewery (always write the method on the object of the instance you want to run it on!)
-    # def beers
-    #     Beer.all.select { |beer| beer.brewery == self }
-    # end
+    def beers
+        Beer.all.select { |beer| beer.brewery == self }
+    end
 
     # get list of all names of beers in a brewery
     def beers_names
@@ -27,6 +27,11 @@ class Brewery
     # get list of all types in a brewery
     def types
         beers.map {|beer| beer.type}
+    end
+
+    #average abv of all of the beers in a brewery
+    def average_abv
+        beers.map {|beer| beer.abv}.sum / beers.length
     end
 
 end
