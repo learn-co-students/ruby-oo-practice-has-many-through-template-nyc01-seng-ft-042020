@@ -34,12 +34,12 @@ sam.give_passenger_review(2, "He barfed in my car.")
 alice.reviews
 ted.reviews
 sam.reviews
-sam.my_ratings 
+sam.ratings
 sam.average_rating
-# alice.my_ratings
-# ted.my_ratings
-# ted.my_ratings 
-# ted.average_rating
+alice.ratings
+ted.ratings
+ted.reviews
+ted.average_rating
 
 binding.pry
 0 #leave this here to ensure binding.pry isn't the last line

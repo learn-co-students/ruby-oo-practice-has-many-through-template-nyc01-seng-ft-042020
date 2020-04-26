@@ -1,16 +1,13 @@
-#class for Model2 goes here
-#Feel free to change the name of the class
-
 class Driver
     attr_reader :name
-    attr_accessor :rating, :reviews
+    attr_accessor :ratings, :reviews
 
     @@all = []
     @@all_ratings = []
 
     def initialize (name)
         @name = name
-        @rating = rating
+        @ratings = []
         @reviews = []
         Driver.all << self
         Driver.all_ratings << @rating
@@ -25,8 +22,6 @@ class Driver
     end
 
     def self.average_ratings
-        #I need a way to remove nils from an array
-
         non_nil_ratings = @@all_ratings.select {|element| element != nil}
         
         if non_nil_ratings.count > 0
@@ -62,7 +57,7 @@ class Driver
 
         #update passenger rating
         if rating > 0.0 && rating < 5.1
-            my_ride.select {|ride| ride.passenger.rating=(rating)}
+            my_ride.select {|ride| ride.passenger.ratings << rating}
         else
             raise "Invalid entry"
         end
@@ -78,42 +73,11 @@ class Driver
         my_ride.select {|ride| ride.passenger.reviews << string}
     end
 
-    def my_ratings 
-        rides.map {|ride| ride.driver.rating}
-    end
-
     def average_rating
-        my_ratings.sum / my_ratings.count
+        if ratings.count > 0
+            ratings.sum / ratings.count
+        else nil
+        end
     end
 
 end
-
-# # DEPRECATED ----
-# class Song
-#     attr_accessor :name
-
-#     @@all = []
-
-#     def initialize (name)
-#         @name = name
-#         @duration = duration
-#         @lyrics = []
-#         Song.all << self
-#     end
-
-#     def self.all
-#         @@all
-#     end
-
-#     def add_lyrics (lyrics)
-#         @lyrics << lyrics
-#     end
-
-#     def get_lyrics 
-#         @lyrics
-#     end
-
-#     def duration
-#     end
-
-# end

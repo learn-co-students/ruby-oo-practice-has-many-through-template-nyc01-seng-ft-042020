@@ -1,18 +1,15 @@
-#class for Model3 goes here
-#Feel free to change the name of the class
-
 require 'pry'
 
 class Passenger
     attr_reader :name
-    attr_accessor :rating, :reviews
+    attr_accessor :ratings, :reviews
 
     @@all = []
     @@all_ratings = []
 
     def initialize (name)
         @name = name
-        @rating = rating
+        @ratings = []
         @reviews = []
         Passenger.all << self
         Passenger.all_ratings << @rating
@@ -62,7 +59,7 @@ class Passenger
 
         #update driver rating
         if rating > 0.0 && rating < 5.1
-            my_ride.select {|ride| ride.driver.rating=(rating)}
+            my_ride.select {|ride| ride.driver.ratings << rating}
         else
             raise "Invalid entry"
         end
@@ -78,15 +75,11 @@ class Passenger
         my_ride.select {|ride| ride.driver.reviews << string}
     end
 
-    # def my_ratings 
-    #     rides.map do |ride| 
-    #         ride.passenger.rating
-    #     end
-    #     binding.pry
-    # end
-
-    # def average_rating
-    #     my_ratings.sum / my_ratings.count
-    # end
+    def average_rating
+        if ratings.count > 0
+            ratings.sum / ratings.count
+        else nil
+        end
+    end
 
 end
