@@ -1,22 +1,27 @@
-# class Artist
-#     attr_accessor :name
+require 'pry'
 
-#     @@all = []
+class Artist
+    attr_accessor :name
 
-#     def initialize (name)
-#         @name = name
-#         Artist.all << self
-#     end
+    @@all = []
 
-#     def self.all
-#         @@all
-#     end
+    def initialize (name)
+        @name = name
+        Artist.all << self
+    end
 
-#     def songs
-#     end
+    def self.all
+        @@all
+    end
 
-#     def average_song_duration
-#     end
+    def songs
+        Song.all.select {|song| song.artist == self}
+    end
 
+    def average_song_duration
+        durations = songs.map {|song| song.duration}
+        average_duration = (durations.sum.to_f / durations.count.to_f)
+        average_duration
+    end
 
-# end
+end
