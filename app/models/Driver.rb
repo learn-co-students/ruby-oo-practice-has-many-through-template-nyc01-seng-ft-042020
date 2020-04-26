@@ -26,15 +26,20 @@ class Driver
 
     def self.average_ratings
         #I need a way to remove nils from an array
-       @@all_ratings.sum / @@all_ratings.count
 
+        non_nil_ratings = @@all_ratings.select {|element| element != nil}
+        
+        if non_nil_ratings.count > 0
+            non_nil_ratings.sum / non_nil_ratings.count
+        else 
+            0
+        end
 
         # if @@all_ratings.each {|element| element = nil}
         #     "Cannot math with nil"
         # else
         #     @@all_ratings.sum / @@all_ratings.count
         # end
-
     end
 
     def rides
@@ -59,7 +64,7 @@ class Driver
         if rating > 0.0 && rating < 5.1
             my_ride.select {|ride| ride.passenger.rating=(rating)}
         else
-            "Invalid entry"
+            raise "Invalid entry"
         end
     end
 
@@ -71,6 +76,14 @@ class Driver
 
         #write review
         my_ride.select {|ride| ride.passenger.reviews << string}
+    end
+
+    def my_ratings 
+        rides.map {|ride| ride.driver.rating}
+    end
+
+    def average_rating
+        my_ratings.sum / my_ratings.count
     end
 
 end
