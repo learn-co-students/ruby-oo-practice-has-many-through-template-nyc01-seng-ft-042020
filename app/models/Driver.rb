@@ -1,3 +1,5 @@
+require 'pry'
+
 class Driver
     attr_reader :name
     attr_accessor :ratings, :reviews
@@ -21,6 +23,10 @@ class Driver
         @@all_ratings
     end
 
+    def self.all_reviews
+        @@all_reviews
+    end
+
     def self.average_ratings
         non_nil_ratings = @@all_ratings.select {|element| element != nil}
         
@@ -29,12 +35,6 @@ class Driver
         else 
             0
         end
-
-        # if @@all_ratings.each {|element| element = nil}
-        #     "Cannot math with nil"
-        # else
-        #     @@all_ratings.sum / @@all_ratings.count
-        # end
     end
 
     def rides
@@ -49,28 +49,25 @@ class Driver
         end
     end
 
-    def give_passenger_rating(ride_id, rating)
-        #find instance of passenger through ride
-        my_ride = Ride.all.select do |ride|
-            ride.id == ride_id
-        end
+    def give_passenger_review (hash)
+        ride_id = hash[:ride_id]
+        review = hash[:review]
+        rating = hash[:rating]
+        this_ride = Ride.all.find {|ride| ride.id == ride_id}
+        passenger = this_ride.passenger
 
-        #update passenger rating
+        Review.new(ride_id, passenger, self, review, rating)
+        
+        #update driver rating
         if rating > 0.0 && rating < 5.1
-            my_ride.select {|ride| ride.passenger.ratings << rating}
+            this_ride.passenger.ratings << rating
         else
             raise "Invalid entry"
         end
-    end
-
-    def give_passenger_review(ride_id, string)
-        #find instance of passenger through ride
-        my_ride = Ride.all.select do |ride|
-            ride.id == ride_id
-        end
 
         #write review
-        my_ride.select {|ride| ride.passenger.reviews << string}
+        this_ride.passenger.reviews << review
+
     end
 
     def average_rating
@@ -78,6 +75,14 @@ class Driver
             ratings.sum / ratings.count
         else nil
         end
+    end
+
+    def reviews_given
+        Review.all.select {|review| review.giver == self}
+    end
+
+    def who_reviewed_me
+        Review.all.select {|review| review.recipient == self}.each {|review| review.giver}
     end
 
 end

@@ -3,10 +3,10 @@ class Ride
 
     @@all = []
 
-    def initialize(id, driver, passenger)
-        @id = id
-        @driver = driver
-        @passenger = passenger
+    def initialize(hash)
+        @id = hash[:ride_id]
+        @driver = hash[:driver]
+        @passenger = hash[:passenger]
         Ride.all << self
     end
 

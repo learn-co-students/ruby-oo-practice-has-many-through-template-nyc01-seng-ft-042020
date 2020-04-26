@@ -51,28 +51,26 @@ class Passenger
         end
     end
 
-    def give_driver_rating(ride_id, rating)
-        #find instance of driver through ride
-        my_ride = Ride.all.select do |ride|
-            ride.id == ride_id
-        end
+    def give_driver_review (hash)
+        ride_id = hash[:ride_id]
+        review = hash[:review]
+        rating = hash[:rating]
+        this_ride = Ride.all.find {|ride| ride.id == ride_id}
 
+        driver = this_ride.driver
+
+        Review.new(ride_id, driver, self, review, rating)
+        
         #update driver rating
         if rating > 0.0 && rating < 5.1
-            my_ride.select {|ride| ride.driver.ratings << rating}
+            this_ride.driver.ratings << rating
         else
             raise "Invalid entry"
         end
-    end
-
-    def give_driver_review(ride_id, string)
-        #find instance of driver through ride
-        my_ride = Ride.all.select do |ride|
-            ride.id == ride_id
-        end
 
         #write review
-        my_ride.select {|ride| ride.driver.reviews << string}
+        this_ride.driver.reviews << review
+
     end
 
     def average_rating
@@ -80,6 +78,14 @@ class Passenger
             ratings.sum / ratings.count
         else nil
         end
+    end
+
+    def reviews_given
+        Review.all.select {|review| review.giver == self}
+    end
+
+    def who_reviewed_me
+        Review.all.select {|review| review.recipient == self}.each {|review| review.giver}
     end
 
 end

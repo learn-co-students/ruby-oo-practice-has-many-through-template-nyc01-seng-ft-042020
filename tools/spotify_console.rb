@@ -4,34 +4,31 @@ def reload
   load 'config/environment.rb'
 end
 
-# DEPRECATED ----
-# big_thief = Artist.new("Big Thief")
-# fionn_regan = Artist.new("Fionn Regan")
-# masterpiece = Song.new("Masterpiece")
-# paul = Song.new("Paul")
-# abacus = Song.new("Abacus")
-# indie_folk = Genre.new("Indie Folk")
-# #masterpiece_by_big_thief
-# #the_end_of_history_by_fionn_regan
+big_thief = Artist.new("Big Thief")
+fionn_regan = Artist.new("Fionn Regan")
+masterpiece = Song.new("Masterpiece", big_thief, 4)
+paul = Song.new("Paul", big_thief, 3)
+abacus = Song.new("Abacus", fionn_regan, 5)
+indie_folk_playlist = Playlist.new ("Indie Folk Playlist")
 
-# Artist.all
-# Song.all
-# Genre.all
-# #Album.all
+Artist.all
+Song.all
+Playlist.all
 
-# big_thief.songs
-# big_thief.average_song_duration
-# masterpiece.add_lyrics("Years, days, makes no difference to me babe.")
-# masterpiece.add_lyrics("You look exactly the same to me.")
-# masterpiece.get_lyrics
-# masterpiece.duration
-# #indie_folk.artist = "Big Thief"
-# #indie_folk.artist = "Fionn Regan"
-# #indie_folk.artists #=> ["Big Thief", Fionn Regan]
-# #masterpiece_by_big_thief.songs
-# #masterpiece_by_big_thief.total_song_duration
-# #indie_folk.songs
-# #indie_folk.artists
+masterpiece.add_lyrics("Years, days, makes no difference to me babe.")
+masterpiece.add_lyrics("You look exactly the same to me.")
+masterpiece.get_lyrics
+
+big_thief.songs
+big_thief.average_song_duration
+
+indie_folk_playlist.add_song(masterpiece)
+indie_folk_playlist.add_song(paul)
+indie_folk_playlist.add_song(abacus)
+
+indie_folk_playlist.songs
+indie_folk_playlist.artists
+indie_folk_playlist.duration
 
 binding.pry
 0 #leave this here to ensure binding.pry isn't the last line

@@ -8,9 +8,9 @@ ted = Passenger.new("Ted")
 alice = Passenger.new("Alice")
 sam = Driver.new("Sam")
 taylor = Driver.new("Taylor")
-ride1 = Ride.new(1, sam, alice)
-ride2 = Ride.new(2, sam, ted)
-ride3 = Ride.new(3, taylor, alice)
+ride1 = Ride.new(ride_id: 1, driver: sam, passenger: alice)
+ride2 = Ride.new(ride_id: 2, driver: sam, passenger: ted)
+ride3 = Ride.new(ride_id: 3, driver: taylor, passenger: alice)
 
 Ride.all
 Driver.all
@@ -26,10 +26,9 @@ ted.rides
 sam.passengers
 taylor.passengers
 
-alice.give_driver_rating(1, 5)
-ted.give_driver_review(2, "He smelled.")
-sam.give_passenger_rating(1, 5)
-sam.give_passenger_review(2, "He barfed in my car.")
+alice.give_driver_review(ride_id: 1, review: "Great driver!", rating: 5)
+ted.give_driver_review(ride_id: 2, review: "He smelled.", rating: 1)
+sam.give_passenger_review(ride_id: 2, review: "He barfed in my car.", rating: 1)
 
 alice.reviews
 ted.reviews
@@ -40,6 +39,9 @@ alice.ratings
 ted.ratings
 ted.reviews
 ted.average_rating
+sam.reviews_given
+ted.reviews_given
+alice.who_reviewed_me
 
 binding.pry
 0 #leave this here to ensure binding.pry isn't the last line
