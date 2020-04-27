@@ -18,7 +18,7 @@ class Type
         Beer.all.select { |beer| beer.type == self }
     end
 
-    # get list of all names of types in a brewery
+    # get list of all names of types in a brewery 
     def types_names
         types.map {|type| type.name}
     end

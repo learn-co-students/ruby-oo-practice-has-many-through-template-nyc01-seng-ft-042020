@@ -16,7 +16,7 @@ class Beer
         @@all
     end
 
-    # find highest abv beer
+    # find highest abv beer 
     def self.strongest_beer
         max_abv = @@all.map {|beer| beer.abv}.max
         @@all.find {|beer| beer.abv == max_abv}

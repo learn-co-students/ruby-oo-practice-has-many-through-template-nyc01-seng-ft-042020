@@ -9,7 +9,7 @@ class Brewery
         Brewery.all << self
     end
 
-    # get list of all breweries
+    # get list of all breweries 
     def self.all
         @@all
     end
