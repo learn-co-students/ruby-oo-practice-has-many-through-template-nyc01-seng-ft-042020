@@ -14,9 +14,7 @@ ride3 = Ride.new(ride_id: 3, driver: taylor, passenger: alice)
 
 Ride.all
 Driver.all
-Driver.average_ratings
 Passenger.all
-Passenger.average_ratings
 
 sam.rides
 taylor.rides
@@ -30,8 +28,9 @@ alice.give_driver_review(ride_id: 1, review: "Great driver!", rating: 5)
 ted.give_driver_review(ride_id: 2, review: "He smelled.", rating: 1)
 sam.give_passenger_review(ride_id: 2, review: "He barfed in my car.", rating: 1)
 
-alice.reviews
+ted.all_reviews
 ted.reviews
+ted.ratings
 sam.reviews
 sam.ratings
 sam.average_rating

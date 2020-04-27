@@ -23,4 +23,19 @@ class Song
         @lyrics
     end
 
+    def add_to_playlist (playlist)
+        PlaylistSong.new(playlist, self)
+    end
+
+    def playlistsong
+        playlistsong = PlaylistSong.all.select {|playlistsong| playlistsong.song == self}
+    end
+
+    def appears_on
+        playlistsong.map {|playlistsong| playlistsong.playlist.name}
+    end
+
+    def appearances
+        playlistsong.count
+    end
 end

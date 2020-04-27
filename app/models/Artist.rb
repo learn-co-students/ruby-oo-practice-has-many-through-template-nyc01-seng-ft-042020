@@ -24,4 +24,16 @@ class Artist
         average_duration
     end
 
+    def playlistsong
+        playlistsong = PlaylistSong.all.select {|playlistsong| playlistsong.song.artist == self}
+    end
+
+    def appears_on
+        playlistsong.map {|playlistsong| playlistsong.playlist.name}.uniq
+    end
+
+    def appearances
+        playlistsong.count
+    end
+
 end

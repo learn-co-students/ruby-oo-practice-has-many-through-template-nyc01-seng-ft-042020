@@ -5,7 +5,6 @@ attr_accessor :name
 
     def initialize (name)
         @name = name
-        @songs = []
         Playlist.all << self
     end
 
@@ -14,21 +13,23 @@ attr_accessor :name
     end
 
     def add_song (song)
-        @songs << song
+        PlaylistSong.new(self, song)
     end
 
-    def songs 
-        @songs
+    def playlistsong
+        playlistsong = PlaylistSong.all.select {|playlistsong| playlistsong.playlist == self}
+    end
+
+    def songs
+        playlistsong.map {|playlistsong| playlistsong.song.name}
     end
 
     def artists 
-        songs.each {|song| song.artist}
+        playlistsong.map {|playlistsong| playlistsong.song.artist.name}
     end
 
     def duration
-        durations = songs.map {|song| song.duration}
-        total = durations.sum
-        total
+        playlistsong.map {|playlistsong| playlistsong.song.duration}.sum
     end
 
 end

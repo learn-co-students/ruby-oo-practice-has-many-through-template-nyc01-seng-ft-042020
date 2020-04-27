@@ -2,41 +2,20 @@ require 'pry'
 
 class Passenger
     attr_reader :name
-    attr_accessor :ratings, :reviews
 
     @@all = []
-    @@all_ratings = []
 
     def initialize (name)
         @name = name
-        @ratings = []
-        @reviews = []
         Passenger.all << self
-        Passenger.all_ratings << @rating
     end
 
     def self.all
         @@all
     end
 
-    def self.all_ratings
-        @@all_ratings
-    end
-
-    def self.average_ratings
-        non_nil_ratings = @@all_ratings.select {|element| element != nil}
-        
-        if non_nil_ratings.count > 0
-            non_nil_ratings.sum / non_nil_ratings.count
-        else 
-            0
-        end
-        # if @@all_ratings.each {|element| element = nil}
-        #     "Cannot math with nil"
-        # else
-        #     @@all_ratings.sum / @@all_ratings.count
-        # end
-
+    def self.passenger_names
+        Ride.all.map {|ride| ride.passenger.name}
     end
 
     def rides
@@ -70,7 +49,18 @@ class Passenger
 
         #write review
         this_ride.driver.reviews << "#{review} - #{name}"
+    end
 
+    def all_reviews
+        Review.all.select {|review| review.recipient == self}
+    end
+
+    def ratings
+        all_reviews.map {|review| review.rating}
+    end
+
+    def reviews
+        all_reviews.map {|review| review.review}
     end
 
     def average_rating
@@ -85,7 +75,7 @@ class Passenger
     end
 
     def who_reviewed_me
-        Review.all.select {|review| review.recipient == self}.each {|review| review.giver}
+        all_reviews.map {|review| review.giver.name}
     end
 
 end
