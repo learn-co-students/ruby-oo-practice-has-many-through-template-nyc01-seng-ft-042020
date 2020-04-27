@@ -20,7 +20,7 @@ class Type
 
     # get list of all names of types in a brewery
     def types_names
-        beers.map {|type| type.name}
+        types.map {|type| type.name}
     end
 
     # get list of all types

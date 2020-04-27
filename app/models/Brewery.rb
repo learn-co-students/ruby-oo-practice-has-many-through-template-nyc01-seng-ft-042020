@@ -29,9 +29,19 @@ class Brewery
         beers.map {|beer| beer.type}
     end
 
-    #average abv of all of the beers in a brewery
+    # average abv of all of the beers in a brewery
     def average_abv
         beers.map {|beer| beer.abv}.sum / beers.length
+    end
+
+    # given a beer, a type and an abv, make a new beer for a brewery
+    def new_beer(beer, type, abv)
+        Beer.new(self, beer, type, abv)
+    end
+
+    # get the total number of beers at a brewery
+    def total_beers
+        beers_names.count
     end
 
 end
