@@ -69,7 +69,7 @@ class Passenger
         end
 
         #write review
-        this_ride.driver.reviews << review
+        this_ride.driver.reviews << "#{review} - #{name}"
 
     end
 
