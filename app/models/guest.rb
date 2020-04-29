@@ -1,34 +1,26 @@
 class Guest
+  @@all = []
   attr_accessor :name, :length_of_stay
 
-  def initialize(name, length_of_stay)
+  def initialize(name)
    @name = name
-   @length_of_stay = length_of_stay
+   Guest.all << self
   end
 
-  def all
-    Booking.all.select { |booking| booking.guest }
+  def self.all
+    @@all
   end
 
-  def upgrade_room(amount)
-    Booking.all.collect{ |booking| booking.guest == self ? booking.price += amount : nil }.compact.join.to_i
+  def my_rooms
+   Room.all.select { |e| e.guest == self ? e : nil}.compact
   end
 
-  def room_total
-    Booking.all.collect{ |booking| booking.guest == self ? booking.price : nil }.compact.join.to_i
+  def get_room(hotel, price_per_night, length_of_stay)
+    Room.new(self, hotel, price_per_night, length_of_stay)
   end
 
-  def bookings
-    Booking.all.collect{ |booking| booking.guest == self ? booking : nil }.compact
+  def hotels
+     self.my_rooms.map { |e| e.hotel }
   end
-
-  def new_booking (room, price)
-    Booking.new(self, room, price)
-  end
-
-  def rooms
-   self.bookings.collect{ |booking| booking.room}
-  end
-
 
 end

@@ -1,45 +1,27 @@
 
 class Room
-  attr_accessor :name
-  def initialize(name)
-    @name = name
+  @@all = []
+  attr_accessor :guest, :price_per_night, :length_of_stay
+  attr_reader :hotel
 
-  end
-  def price
-    Booking.all.collect{|booking| booking.room == self ? booking.price : nil}.compact.join.to_i
-  end
-
-  def bookings
-    Booking.all.collect{ |booking| booking.room == self ? booking : nil}.compact
-  end
-
-  def guests
-    Booking.all.collect{ |booking| booking.room == self ? booking.guest : nil}.compact
+  def initialize(guest, hotel, price_per_night, length_of_stay)
+    @guest = guest
+    @hotel = hotel
+    @price_per_night = price_per_night
+    @length_of_stay = length_of_stay
+    Room.all << self
   end
 
-  def combined_booking_duration
-    Booking.all.collect{ |booking| booking.room == self ? booking.guest.length_of_stay : nil}.compact.sum
+  def self.all
+    @@all
   end
 
-  def guests_names
-    Booking.all.collect{ |booking| booking.room == self ? booking.guest.name : nil}.compact
+  def total_price
+    @price_per_night * @length_of_stay
   end
 
-  def new_booking(guest, cost)
-    Booking.new(guest, self, cost)
+  def self.all_guest
+    Room.all.map { |e| e.guest }
   end
-
-  def rooms
-    Booking.all.collect{ |booking| booking.room}
-  end
-
-  def guest_lenght_of_stay
-    Booking.all.collect{ |booking| booking.room == self ? booking.guest.length_of_stay : nil}.compact.join.to_i
-  end
-
-  def cost
-   self.price  * self.guest_lenght_of_stay
-  end
-
 
 end
